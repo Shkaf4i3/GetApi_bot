@@ -10,7 +10,7 @@ api_crypto = getenv('api_crypto')
 
 
 # Api погоды
-async def get_city_world(city, country_code) -> str:
+async def get_city_world(city, country_code: str) -> str:
     base_url = f'https://api.openweathermap.org/data/2.5/weather?q={city},{country_code}&appid={api_weather}&units=metric'
     async with aiohttp.ClientSession() as session:
         async with session.get(base_url) as response:
@@ -58,7 +58,7 @@ async def get_eth_rate() -> int:
 
 
 # Курсы валют
-def currency_rate(rate):
+def currency_rate(rate: str) -> str:
     rates = ExchangeRates()
     usd_rate = rates[rate].value
     return usd_rate
