@@ -16,22 +16,22 @@ def back_main_kb() -> ReplyKeyboardMarkup:
 
 
 
-def exchange_rates() -> InlineKeyboardMarkup:
+async def exchange_rates() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
     inline_keyboard.button(text='💵 Курс USD 💵', callback_data='usd_rate')
     inline_keyboard.button(text='💶 Курс EUR 💶', callback_data='eur_rate')
     inline_keyboard.button(text='💸 Курс UAH 💸', callback_data='uah_rate')
     return inline_keyboard.adjust(1).as_markup()
 
-def exchange_crypto_rates() -> InlineKeyboardMarkup:
+async def exchange_crypto_rates() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
     inline_keyboard.button(text='Курс Bitcoin', callback_data='btc_rate')
     inline_keyboard.button(text='Курс Toncoin', callback_data='ton_rate')
-    inline_keyboard.button(text='Курс USDT', callback_data='usdt_rate')
+    inline_keyboard.button(text='Курс Solana', callback_data='solana_rate')
     inline_keyboard.button(text='Курс ETH', callback_data='eth_rate')
     return inline_keyboard.adjust(1).as_markup()
 
-def info_weather() -> InlineKeyboardMarkup:
+async def info_weather() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
     inline_keyboard.button(text='🇷🇺 Информация по городам РФ 🇷🇺',callback_data='info_rf')
     inline_keyboard.button(text='🇺🇸 Информация по городам США 🇺🇸', callback_data='info_us')
