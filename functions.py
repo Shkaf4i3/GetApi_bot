@@ -21,44 +21,18 @@ async def get_city_world(city, country_code: str) -> str:
                 return False
 
 
-
 # Api криптовалюты
-async def get_btc_rate() -> int:
+async def get_cryptocurrency_rate(id: int) -> int:
     base_url = f'https://api.cryptorank.io/v1/currencies?api_key={api_crypto}'
     async with aiohttp.ClientSession() as session:
         async with session.get(base_url) as response:
             data = await response.json()
-            price = int(data['data'][0]['values']['USD']['price'])
-            return price
-
-async def get_ton_rate() -> int:
-    base_url = f'https://api.cryptorank.io/v1/currencies?api_key={api_crypto}'
-    async with aiohttp.ClientSession() as session:
-        async with session.get(base_url) as response:
-            data = await response.json()
-            price = int(data['data'][9]['values']['USD']['price'])
-            return price
-
-async def get_usdt_rate() -> float:
-    base_url = f'https://api.cryptorank.io/v1/currencies?api_key={api_crypto}'
-    async with aiohttp.ClientSession() as session:
-        async with session.get(base_url) as response:
-            data = await response.json()
-            price = data['data'][2]['values']['USD']['price']
-            return price
-
-async def get_eth_rate() -> int:
-    base_url = f'https://api.cryptorank.io/v1/currencies?api_key={api_crypto}'
-    async with aiohttp.ClientSession() as session:
-        async with session.get(base_url) as response:
-            data = await response.json()
-            price = int(data['data'][1]['values']['USD']['price'])
-            return price
-
+            price = data['data'][id]['values']['USD']['price']
+            return int(price)
 
 
 # Курсы валют
-def currency_rate(rate: str) -> str:
+def get_currency_rate(rate: str) -> int:
     rates = ExchangeRates()
     usd_rate = rates[rate].value
-    return usd_rate
+    return int(usd_rate)
