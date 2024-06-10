@@ -6,11 +6,8 @@ from aiogram.fsm.state import State, StatesGroup
 
 import reply as kb
 from functions import (get_city_world,
-                       get_btc_rate,
-                       get_eth_rate,
-                       get_ton_rate,
-                       get_usdt_rate,
-                       currency_rate)
+                       get_cryptocurrency_rate,
+                       get_currency_rate)
 
 
 user_private_router = Router()
@@ -44,17 +41,17 @@ async def back_main_menu(message: Message):
 @user_private_router.message(F.text == '📊 Курсы валют 📊')
 async def currency_rates(message: Message):
     await message.answer('Какие курсы валют вас интересуют?',
-                         reply_markup=kb.exchange_rates())
+                         reply_markup=await kb.exchange_rates())
 
 @user_private_router.message(F.text == '🖥 Курсы криптовалют 🖥')
 async def cryptocurrency_rates(message: Message):
     await message.answer('Какие курсы криптовалют вас интересуют?',
-                         reply_markup=kb.exchange_crypto_rates())
+                         reply_markup=await kb.exchange_crypto_rates())
 
 @user_private_router.message(F.text == '🌆 Информация о погоде 🌆')
 async def weather_info(message: Message):
     await message.answer('Какая страна вас интересует?',
-                         reply_markup=kb.info_weather())
+                         reply_markup=await kb.info_weather())
 
 
 
@@ -157,46 +154,46 @@ async def response_city_ua(message: Message, state: FSMContext):
 
 @user_private_router.callback_query(F.data == 'btc_rate')
 async def btc_rate(callback: CallbackQuery):
-    btc_data = await get_btc_rate()
+    btc_data = await get_cryptocurrency_rate(0)
     await callback.answer()
     await callback.message.answer(f'Курс Bitcoin - {btc_data} долларов')
 
 @user_private_router.callback_query(F.data == 'ton_rate')
 async def ltc_rate(callback: CallbackQuery):
-    not_data = await get_ton_rate()
+    not_data = await get_cryptocurrency_rate(9)
     await callback.answer()
     await callback.message.answer(f'Курс Notcoin - {not_data} долларов')
 
-@user_private_router.callback_query(F.data == 'usdt_rate')
+@user_private_router.callback_query(F.data == 'solana_rate')
 async def usdt_rate(callback: CallbackQuery):
-    usdt_data = await get_usdt_rate()
+    solana_data = await get_cryptocurrency_rate(4)
     await callback.answer()
-    await callback.message.answer(f'Курс USDT - {str(usdt_data)} - доллара')
+    await callback.message.answer(f'Курс Solana - {solana_data} долларов')
 
 @user_private_router.callback_query(F.data == 'eth_rate')
 async def eth_rate(callback: CallbackQuery):
-    eth_data = await get_eth_rate()
+    eth_data = await get_cryptocurrency_rate(1)
     await callback.answer()
-    await callback.message.answer(f'Курс ETH - {eth_data} - долларов')
+    await callback.message.answer(f'Курс ETH - {eth_data} долларов')
 
 
 @user_private_router.callback_query(F.data == 'usd_rate')
 async def check_usd(callback: CallbackQuery):
-    usd_rate = currency_rate('USD')
+    usd_rate = get_currency_rate('USD')
 
     await callback.answer()
     await callback.message.answer(f'Сейчас курс доллара - {usd_rate} рублей')
 
 @user_private_router.callback_query(F.data == 'eur_rate')
 async def check_eur(callback: CallbackQuery):
-    eur_rate = currency_rate('EUR')
+    eur_rate = get_currency_rate('EUR')
 
     await callback.answer()
     await callback.message.answer(f'Сейчас курс евро - {eur_rate} рублей')
 
 @user_private_router.callback_query(F.data == 'uah_rate')
 async def check_uah(callback: CallbackQuery):
-    uah_rate = currency_rate('UAH')
+    uah_rate = get_currency_rate('UAH')
 
     await callback.answer()
     await callback.message.answer(f'Сейчас курс гривны - {uah_rate} рублей')
