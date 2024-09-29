@@ -1,12 +1,11 @@
 from aiohttp import ClientSession
 from pycbrf import ExchangeRates
-from os import getenv
-from dotenv import load_dotenv
+
+from config_reader import config
 
 
-load_dotenv()
-api_weather = getenv('api_weather')
-api_crypto = getenv('api_crypto')
+api_weather = config.api_weather
+api_crypto = config.api_crypto
 
 
 # Api погоды
