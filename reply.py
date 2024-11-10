@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
+from functions.calldata_api import Checkcryptodata, Checkcurrencydata
+
 
 def main_kb() -> ReplyKeyboardMarkup:
     keyboard = ReplyKeyboardBuilder()
@@ -18,17 +20,17 @@ def back_main_kb() -> ReplyKeyboardMarkup:
 
 async def exchange_rates() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
-    inline_keyboard.button(text='💵 Курс USD 💵', callback_data='usd_rate')
-    inline_keyboard.button(text='💶 Курс EUR 💶', callback_data='eur_rate')
-    inline_keyboard.button(text='💸 Курс UAH 💸', callback_data='uah_rate')
+    inline_keyboard.button(text='💵 USD 💵', callback_data=Checkcurrencydata(rate='usd'))
+    inline_keyboard.button(text='💶 EUR 💶', callback_data=Checkcurrencydata(rate='eur'))
+    inline_keyboard.button(text='💸 UAH 💸', callback_data=Checkcurrencydata(rate='uah'))
     return inline_keyboard.adjust(1).as_markup()
 
 async def exchange_crypto_rates() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
-    inline_keyboard.button(text='Курс Bitcoin', callback_data='btc_rate')
-    inline_keyboard.button(text='Курс Toncoin', callback_data='ton_rate')
-    inline_keyboard.button(text='Курс Solana', callback_data='solana_rate')
-    inline_keyboard.button(text='Курс ETH', callback_data='eth_rate')
+    inline_keyboard.button(text='Bitcoin', callback_data=Checkcryptodata(rate='btc'))
+    inline_keyboard.button(text='Toncoin', callback_data=Checkcryptodata(rate='ton'))
+    inline_keyboard.button(text='Solana', callback_data=Checkcryptodata(rate='solana'))
+    inline_keyboard.button(text='ETH', callback_data=Checkcryptodata(rate='eth'))
     return inline_keyboard.adjust(1).as_markup()
 
 async def info_weather() -> InlineKeyboardMarkup:

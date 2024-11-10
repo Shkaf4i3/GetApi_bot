@@ -1,7 +1,7 @@
 from aiohttp import ClientSession
 from pycbrf import ExchangeRates
 
-from config_reader import config
+from functions.config_reader import config
 
 
 api_weather = config.api_weather

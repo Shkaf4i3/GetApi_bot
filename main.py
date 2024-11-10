@@ -6,9 +6,9 @@ from aiogram.types import BotCommandScopeAllPrivateChats
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from commands import private
-from handlers import user_private_router
-from config_reader import config
+from functions.commands import private
+from handlers.admin_private import admin
+from functions.config_reader import config
 
 
 async def main() -> None:
@@ -16,7 +16,7 @@ async def main() -> None:
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
-    dp.include_routers(user_private_router)
+    dp.include_routers(admin)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=BotCommandScopeAllPrivateChats())
