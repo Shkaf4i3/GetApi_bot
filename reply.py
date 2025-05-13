@@ -28,7 +28,7 @@ async def exchange_rates() -> InlineKeyboardMarkup:
 async def exchange_crypto_rates() -> InlineKeyboardMarkup:
     inline_keyboard = InlineKeyboardBuilder()
     inline_keyboard.button(text='Bitcoin', callback_data=Checkcryptodata(rate='btc'))
-    inline_keyboard.button(text='Toncoin', callback_data=Checkcryptodata(rate='ton'))
+    inline_keyboard.button(text='Tether', callback_data=Checkcryptodata(rate='teh'))
     inline_keyboard.button(text='Solana', callback_data=Checkcryptodata(rate='solana'))
     inline_keyboard.button(text='ETH', callback_data=Checkcryptodata(rate='eth'))
     return inline_keyboard.adjust(1).as_markup()

@@ -53,13 +53,10 @@ async def weather_info(message: Message):
                          reply_markup=await kb.info_weather())
 
 
-
-
 @admin.callback_query(F.data == 'info_rf')
 async def city_rf_weather(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Weather.city_ru)
 
-    await callback.answer()
     await callback.message.answer('Введите название города')
 
 @admin.message(Weather.city_ru)
@@ -83,7 +80,6 @@ async def response_city_ru(message: Message, state: FSMContext):
 async def city_us_weather(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Weather.city_us)
 
-    await callback.answer()
     await callback.message.answer('Введите название штата')
 
 @admin.message(Weather.city_us)
@@ -107,7 +103,6 @@ async def response_city_us(message: Message, state: FSMContext):
 async def city_uk_weather(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Weather.city_uk)
 
-    await callback.answer()
     await callback.message.answer('Введите название города')
 
 @admin.message(Weather.city_uk)
@@ -131,7 +126,6 @@ async def response_city_uk(message: Message, state: FSMContext):
 async def city_ua_weather(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Weather.city_ua)
 
-    await callback.answer()
     await callback.message.answer('Введите название города')
 
 @admin.message(Weather.city_ua)
@@ -154,21 +148,17 @@ async def response_city_ua(message: Message, state: FSMContext):
 @admin.callback_query(Checkcryptodata.filter())
 async def crypto_rates(callback: CallbackQuery, callback_data: Checkcryptodata) -> None:
     if callback_data.rate == 'btc':
-        btc_data = await get_cryptocurrency_rate(0)
+        btc_data = await get_cryptocurrency_rate(1)
         await callback.message.answer(f'Текущий курс Bitcoin - {btc_data} долларов')
-    elif callback_data.rate == 'ton':
-        not_data = await get_cryptocurrency_rate(9)
-        await callback.answer()
-        await callback.message.answer(f'Текущий курс Notcoin - {not_data} долларов')
+    elif callback_data.rate == 'teh':
+        not_data = await get_cryptocurrency_rate(16)
+        await callback.message.answer(f'Текущий курс Tether USDT - {not_data} долларов')
     elif callback_data.rate == 'solana':
-        solana_data = await get_cryptocurrency_rate(4)
-        await callback.answer()
+        solana_data = await get_cryptocurrency_rate(5663)
         await callback.message.answer(f'Текущий курс Solana - {solana_data} долларов')
     elif callback_data.rate == 'eth':
-        eth_data = await get_cryptocurrency_rate(1)
-        await callback.answer()
+        eth_data = await get_cryptocurrency_rate(3)
         await callback.message.answer(f'Текущий курс ETH - {eth_data} долларов')
-    await callback.answer()
 
 
 @admin.callback_query(Checkcurrencydata.filter())
@@ -182,4 +172,3 @@ async def currency_rates(callback: CallbackQuery, callback_data: Checkcurrencyda
     elif callback_data.rate == 'uah':
         uah_rate = get_currency_rate('UAH')
         await callback.message.answer(f'Сейчас курс гривны - {uah_rate} рублей')
-    await callback.answer()
