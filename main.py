@@ -9,12 +9,15 @@ from aiogram.enums import ParseMode
 from functions.commands import private
 from handlers.admin_private import admin
 from functions.config_reader import config
+from functions.middlewares import Callbackanswer
 
 
 async def main() -> None:
+
     bot = Bot(token=config.bot_token.get_secret_value(),
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
+    dp.callback_query.middleware(Callbackanswer())
 
     dp.include_routers(admin)
 
